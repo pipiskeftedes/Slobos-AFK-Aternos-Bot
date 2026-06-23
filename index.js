@@ -2018,12 +2018,12 @@ process.on("uncaughtException", (err) => {
     }
   }
 
-  setTimeout(
-    () => {
-      scheduleReconnect();
-    },
-    isNetworkError ? 5000 : 10000,
-  );
+  if (!isNetworkError) {
+  setTimeout(() => {
+    scheduleReconnect();
+  }, 10000);
+}
+// For network errors, 'end' event will handle reconnect
 });
 
 process.on("unhandledRejection", (reason) => {
